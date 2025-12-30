@@ -1,0 +1,163 @@
+---
+title: Getting Started with Squbix
+description: Learn how to set up your Squbix account and complete your first steps to begin managing healthcare operations.
+---
+
+## Prerequisites
+
+Before you begin, ensure you have the following:
+
+<Callout kind="info">
+
+- A valid email address for account verification
+- Access to a modern web browser (`Chrome >= 100`, `Firefox >= 90`, or `Safari >= 15`)
+- Healthcare provider credentials or administrator access
+- Optional: API access for programmatic patient data entry
+
+</Callout>
+
+## Create and Verify Your Account
+
+Follow these steps to set up your Squbix account.
+
+<Steps>
+  <Step title="Sign Up" icon="user-plus">
+    Visit `https://dashboard.example.com/signup` and enter your details:
+
+    - Full name
+    - Professional email (e.g., `dr.smith@clinic.com`)
+    - Organization name
+    - Phone number
+
+    Click **Create Account**.
+  </Step>
+  <Step title="Verify Email" icon="mail">
+    Check your inbox for a verification email from Squbix. Click the link to confirm your email address.
+
+    If you do not receive it, check spam or request a resend from the signup page.
+  </Step>
+  <Step title="Set Password" icon="lock">
+    Return to the dashboard login page. Enter your verified email and create a strong password meeting these requirements:
+
+    - At least 12 characters
+    - Includes uppercase, lowercase, numbers, and symbols
+  </Step>
+</Steps>
+
+## Log In and Explore the Dashboard
+
+Access your personalized dashboard.
+
+<Tabs>
+  <Tab title="Web Browser" icon="globe">
+    Navigate to `https://dashboard.example.com/login`. Enter your credentials and select **Log In**.
+
+    You land on the main dashboard showing:
+    
+    - Patient summary widgets
+    - Recent appointments
+    - Billing overview
+  </Tab>
+  <Tab title="Mobile App" icon="smartphone">
+    Download the Squbix app from App Store or Google Play. Log in with the same credentials.
+
+    The mobile view optimizes for on-the-go access to patient charts and scheduling.
+  </Tab>
+</Tabs>
+
+## Configure Basic User Setup and Permissions
+
+Add team members and assign roles.
+
+<Steps>
+  <Step title="Add Users" icon="users">
+    From the dashboard, go to **Admin > Users > Add User**.
+
+    Enter user details and select a role:
+    
+    | Role          | Permissions                  |
+    |---------------|------------------------------|
+    | Administrator | Full access, user management |
+    | Physician     | Patient records, prescriptions |
+    | Nurse         | View records, update vitals  |
+    | Billing       | Invoices, payments only      |
+  </Step>
+  <Step title="Assign Permissions" icon="shield">
+    For each user, toggle specific permissions like `View Patient Data` or `Edit Billing`.
+    
+    Save changes. Users receive an invite email.
+  </Step>
+</Steps>
+
+## Enter Your First Patient Record
+
+Use the API for quick programmatic entry or the UI form.
+
+<CodeGroup tabs="JavaScript,Python">
+  ```javascript
+  const response = await fetch('https://api.example.com/v1/patients', {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer YOUR_API_KEY',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      firstName: 'Jane',
+      lastName: 'Doe',
+      dateOfBirth: '1985-03-15',
+      gender: 'female',
+      phone: '+1-555-0123',
+      conditions: ['Hypertension']
+    })
+  });
+
+  const patient = await response.json();
+  console.log(patient.id);
+  ```
+  ```python
+  import requests
+
+  headers = {
+      'Authorization': 'Bearer YOUR_API_KEY',
+      'Content-Type': 'application/json'
+  }
+
+  data = {
+      'firstName': 'Jane',
+      'lastName': 'Doe',
+      'dateOfBirth': '1985-03-15',
+      'gender': 'female',
+      'phone': '+1-555-0123',
+      'conditions': ['Hypertension']
+  }
+
+  response = requests.post('https://api.example.com/v1/patients', json=data, headers=headers)
+  patient_id = response.json()['id']
+  print(patient_id)
+  ```
+</CodeGroup>
+
+<Callout kind="tip">
+
+Verify the patient appears in your dashboard search. Use `<ParamField path="id" param-type="string" required="true">` for unique patient IDs in follow-up calls.
+
+</Callout>
+
+## Next Steps
+
+Explore more features to enhance your workflow.
+
+<Columns cols={2}>
+  <Card title="Authentication" icon="shield" href="/authentication">
+    Secure your API integrations and manage sessions.
+  </Card>
+  <Card title="Introduction" icon="book-open" href="/introduction">
+    Dive deeper into Squbix core concepts.
+  </Card>
+  <Card title="User Management" icon="users" href="#">
+    Advanced permissions and role-based access.
+  </Card>
+  <Card title="Billing Setup" icon="dollar-sign" href="#">
+    Configure insurance and invoicing.
+  </Card>
+</Columns>

@@ -1,0 +1,180 @@
+---
+title: Squbix Changelog
+description: Review the version history of Squbix, including recent updates, new features, and resolved issues.
+---
+
+## Recent Updates
+
+<Update label="2024-10-15" description="v2.1.0" tags={["feature", "improvement"]}>
+
+## New Features
+
+- Enhanced billing module with automated invoice generation and insurance claim processing.
+- Integrated payment gateway support for major providers like Stripe and PayPal.
+
+## Improvements
+
+- Optimized patient record search with fuzzy matching for faster lookups.
+- Dashboard widgets now support customizable layouts for clinicians.
+
+## Bug Fixes
+
+- Fixed intermittent sync issues in multi-clinic deployments.
+
+</Update>
+
+<Update label="2024-09-10" description="v2.0.0" tags={["feature", "breaking"]}>
+
+## New Features
+
+- Patient portal with self-service appointment booking and secure document upload.
+- Mobile-responsive UI for accessing records on tablets and phones.
+
+## Breaking Changes
+
+- Updated API authentication to require JWT tokens instead of API keys. Migrate using the new endpoints.
+
+## Improvements
+
+- Added role-based access controls for administrative and clinical staff.
+
+</Update>
+
+<Update label="2024-08-05" description="v1.9.0" tags={["bugfix", "security"]}>
+
+## Bug Fixes
+
+- Resolved data export errors in CSV and PDF formats.
+- Corrected scheduling conflicts in calendar views.
+
+## Security & Compliance
+
+- Implemented HIPAA-compliant audit logging for all patient data access.
+- Patched vulnerabilities in third-party encryption libraries.
+
+</Update>
+
+## Upcoming Roadmap
+
+<Columns cols={3}>
+
+<Card title="Q4 2024" icon="zap" href="#">
+
+AI-driven diagnostics and predictive analytics for patient outcomes.
+
+</Card>
+
+<Card title="Q1 2025" icon="shield" href="#">
+
+Advanced telemedicine integration with video consultations.
+
+</Card>
+
+<Card title="Q2 2025" icon="users" href="#">
+
+Multi-language support and international compliance features.
+
+</Card>
+
+</Columns>
+
+<Callout kind="tip">
+
+Check the [release notes](https://dashboard.example.com/releases) in your Squbix dashboard for deployment-specific instructions.
+
+</Callout>
+
+## How to Upgrade
+
+Follow these steps to upgrade Squbix to the latest version. Always back up your data first.
+
+<Steps>
+
+<Step title="Backup Your Data" icon="database">
+
+Export patient records and configurations via the admin panel.
+
+```bash
+# Use CLI for full backup
+squbix backup --output ./backups --env production
+```
+
+</Step>
+
+<Step title="Update Package" icon="package">
+
+<CodeGroup tabs="npm,yarn">
+
+````bash
+npm update @squbix/core @squbix/billing
+````
+
+````bash
+yarn upgrade @squbix/core@latest @squbix/billing@latest
+````
+
+</CodeGroup>
+
+Verify the update:
+
+```bash
+squbix version
+```
+
+</Step>
+
+<Step title="Run Migrations" icon="settings">
+
+Apply database schema changes.
+
+```bash
+squbix migrate --env production
+```
+
+Test endpoints like `https://api.example.com/v2/patients`.
+
+</Step>
+
+<Step title="Restart Services" icon="refresh-cw">
+
+```bash
+systemctl restart squbix
+# Or use Docker
+docker-compose up -d
+```
+
+</Step>
+
+</Steps>
+
+<Expandable title="Migration Notes for v2.0.0" default-open="false">
+
+If upgrading from v1.x, update your auth calls:
+
+<CodeGroup tabs="JavaScript,Python">
+
+````javascript
+// Old
+const response = await fetch('https://api.example.com/patients', {
+  headers: { 'X-API-Key': 'YOUR_API_KEY' }
+});
+
+// New
+const token = await getJWTToken();
+const response = await fetch('https://api.example.com/v2/patients', {
+  headers: { 'Authorization': `Bearer ${token}` }
+});
+````
+
+````python
+# Old
+response = requests.get('https://api.example.com/patients', headers={'X-API-Key': 'YOUR_API_KEY'})
+
+# New
+token = get_jwt_token()
+response = requests.get('https://api.example.com/v2/patients', headers={'Authorization': f'Bearer {token}'})
+````
+
+</CodeGroup>
+
+</Expandable>
